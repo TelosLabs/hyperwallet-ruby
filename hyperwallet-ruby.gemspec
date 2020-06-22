@@ -8,9 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Jordán Treviño"]
   spec.email         = ["jordan@teloslabs.co"]
 
-  spec.summary       = %q{TODO: Write a short summary, because RubyGems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = "Provides a Ruby wrapper for Hyperwallet's API "
+  spec.homepage      = "https://github.com/TelosLabs/hyperwallet-ruby"
   spec.license       = "MIT"
 
   spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
