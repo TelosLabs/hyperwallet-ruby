@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "hyperwallet/ruby"
+require "hyperwallet/version"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

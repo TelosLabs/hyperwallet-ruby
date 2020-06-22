@@ -1,10 +1,10 @@
 lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "hyperwallet/ruby/version"
+require "hyperwallet/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "hyperwallet-ruby"
-  spec.version       = Hyperwallet::Ruby::VERSION
+  spec.version       = Hyperwallet::VERSION
   spec.authors       = ["Jordán Treviño"]
   spec.email         = ["jordan@teloslabs.co"]
 
