@@ -1,16 +1,24 @@
-class Hyperwallet::Api::Config
+module Hyperwallet
+  module Api
+    class Config
 
-  API_URL     = "https://api.sandbox.hyperwallet.com/rest"
-  API_VERSION = "/v3"
+      PRODUCTION_URL     = "https://api.sandbox.hyperwallet.com/rest"
+      UAT_URL            = "https://uat-api.paylution.com/rest"
 
-  attr_reader :api_user, :api_password
+      API_VERSION = "/v3"
+      MODES       = [:uat, :production]
 
-  def set_api_user(user)
-    @api_user = user
+      class << self
+        cattr_accessor :api_user, :api_password, :api_mode
+
+        def uat?
+          api_mode == :uat
+        end
+
+        def production?
+          api_mode == :production
+        end
+      end
+    end
   end
-
-  def set_api_password(password)
-    @api_password = password
-  end
-
 end

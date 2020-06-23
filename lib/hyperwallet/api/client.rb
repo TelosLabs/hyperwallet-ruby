@@ -1,3 +1,5 @@
+require 'faraday'
+
 class Hyperwallet::Api::Client < Hyperwallet::Api::Config
 
   attr_accessor :client_id, :conn, :response, :errors
@@ -24,6 +26,14 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
 
   def base_url 
     API_URL + API_VERSION
+  end
+
+  def active_url
+    if uat?
+      UAT_URL
+    elsif production?
+      BASE_URL
+    end
   end
 
   def add_headers
