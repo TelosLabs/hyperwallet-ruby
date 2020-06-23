@@ -1,11 +1,4 @@
-$:.unshift File.dirname(__FILE__)
-
-require "hyperwallet/version"
-
 module Hyperwallet
-  class Error < StandardError; end
-  # Your code goes here...
-
   module Api
 
     class Config
