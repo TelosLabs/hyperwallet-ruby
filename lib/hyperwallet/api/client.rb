@@ -1,17 +1,20 @@
 require 'faraday'
+require 'pry'
 
 class Hyperwallet::Api::Client < Hyperwallet::Api::Config
 
   attr_accessor :client_id, :conn, :response, :errors
 
-  def initialize(client_id:)
-    @client_id = client_id
-    @conn      = Faraday.new(url: base_url) { |conn| conn.basic_auth(api_user, api_password) }
+  def initialize
+    # @client_id = client_id
+    @conn      = get_connector
     add_headers
   end
 
   def get(resource:)
-
+    self.response = conn.get do |request|
+      request.url resource
+    end
   end
 
   def post(resource:)
@@ -20,18 +23,24 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
 
   private
 
+  def get_connector
+    Faraday.new(url: base_url) do |conn| 
+      conn.basic_auth(self.class.api_user, self.class.api_password) 
+    end
+  end
+
   def request_url_for(resource)
     base_url + "/" + resource
   end
 
   def base_url 
-    API_URL + API_VERSION
+    active_url + API_VERSION
   end
 
   def active_url
-    if uat?
+    if self.class.uat?
       UAT_URL
-    elsif production?
+    elsif self.class.production?
       BASE_URL
     end
   end
@@ -39,7 +48,6 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
   def add_headers
     conn.headers.merge!(
       {
-        'Authorization'=> client_id,
         'Content-Type'=> "application/json"
       }
     )
