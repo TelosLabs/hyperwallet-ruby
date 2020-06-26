@@ -3,7 +3,7 @@ require 'pry'
 
 class Hyperwallet::Api::Client < Hyperwallet::Api::Config
 
-  attr_accessor :client_id, :conn, :response, :errors
+  attr_accessor :client_id, :conn, :response, :body, :errors
 
   def initialize
     # @client_id = client_id
@@ -15,13 +15,26 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
     self.response = conn.get do |request|
       request.url resource
     end
+    handle_response
   end
 
-  def post(resource:)
-
+  def post(resource:, payload:)
+    self.response = conn.post do |request|
+      request.url resource
+      request.body = payload
+    end
+    handle_response
   end
 
   private
+
+  def handle_response
+    if self.response.success? 
+      @body = JSON.parse(self.response.body)
+    else
+      @errors = JSON.parse(self.response.body)
+    end
+  end
 
   def get_connector
     Faraday.new(url: base_url) do |conn| 
