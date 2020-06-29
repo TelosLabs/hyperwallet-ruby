@@ -18,7 +18,7 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
     handle_response
   end
 
-  def post(resource:, payload:)
+  def post(resource:, payload: nil)
     self.response = conn.post do |request|
       request.url resource
       request.body = payload

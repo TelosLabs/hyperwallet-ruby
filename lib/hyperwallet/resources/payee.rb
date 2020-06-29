@@ -15,12 +15,26 @@ module Hyperwallet
 
       def create
         connector.post(resource: ENDPOINT, payload: prepare_create_payload.to_json)
+        if success?
+          connector.body
+        else
+          connector.errors
+        end
       end
 
       def show(token:)
       end
 
       def update(token:)
+      end
+
+      def get_authentication_token
+        connector.post(resource: ENDPOINT+"/"+ attributes[:token] +"/authentication-token")
+        if success?
+          connector.body["value"]
+        else
+          connector.errors
+        end
       end
 
       def prepare_create_payload
