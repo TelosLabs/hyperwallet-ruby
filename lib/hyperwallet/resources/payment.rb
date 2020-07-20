@@ -16,9 +16,15 @@ module Hyperwallet
       end
 
       def show(token:)
+        connector.get(resource: ENDPOINT + "/" + token)
+        handle_response
       end
 
-      def update(token:)
+      class << self
+        def index
+          connector.get(resource: ENDPOINT)
+          #TODO: instantiate payments, add_pagination, etc.
+        end
       end
 
       private
