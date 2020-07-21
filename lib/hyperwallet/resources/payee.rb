@@ -19,10 +19,11 @@ module Hyperwallet
       end
 
       def show(token:)
+        connector.get(resource: ENDPOINT + "/" + token)
       end
 
-      def update(token:)
-      end
+      # def update(token:)
+      # end
 
       def index_bank_accounts
         connector.get(resource: bank_account.resource_endpoint(token: attributes[:token]))
