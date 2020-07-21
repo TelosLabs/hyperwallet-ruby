@@ -1,6 +1,6 @@
 module Hyperwallet
   module Resources
-    class BankAccount < Hyperwallet::Resources::TransferMethod
+    class VenmoAccount < Hyperwallet::Resources::TransferMethod
 
       ENDPOINT        = 'users'
 
@@ -14,11 +14,8 @@ module Hyperwallet
 
       class << self
         def method_endpoint
-          'venmo-accounts'
+          'bank-accounts'
         end
-
-        # def prepare_venmo_account_create_payload(attributes)
-        # end
       end
     end
   end
