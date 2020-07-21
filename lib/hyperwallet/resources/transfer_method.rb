@@ -17,6 +17,10 @@ module Hyperwallet
         def resource_endpoint(token:)
           ENDPOINT + "/" + token + "/" + method_endpoint
         end
+
+        def method_endpoint
+          'transfer-methods'
+        end
       end
     end
   end
