@@ -37,7 +37,8 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
   end
 
   def get_connector
-    Faraday.new(url: base_url) do |conn| 
+    Faraday.new(url: base_url) do |conn|
+      conn.adapter Faraday::Adapter::NetHttp
       conn.basic_auth(self.class.api_user, self.class.api_password) 
     end
   end
