@@ -3,17 +3,17 @@ module Hyperwallet
     class Payment < Hyperwallet::Resources::Base
       ENDPOINT = 'payments'
 
-      attr_accessor :attributes, :body
-
-      def initialize(**args)
-        @attributes = args
-        validate_fields
-      end
-
-      def create
-        connector.post(resource: ENDPOINT, payload: prepare_create_payload.to_json)
-        handle_response
-      end
+      attr_accessor  :amount,
+                     :client_payment_id,
+                     :created_on,
+                     :currency,
+                     :destination_token,
+                     :expires_on,
+                     :links,
+                     :program_token,
+                     :purpose,
+                     :status,
+                     :token
 
       def show(token:)
         connector.get(resource: ENDPOINT + "/" + token)
@@ -25,37 +25,14 @@ module Hyperwallet
           connector.get(resource: ENDPOINT)
           #TODO: instantiate payments, add_pagination, etc.
         end
-      end
 
-      private
-
-      def validate_fields
-        # validate elements
-      end
-
-      def prepare_create_payload
-        {
-          amount:           attributes[:amount],
-          clientPaymentId:  attributes[:client_payment_id],
-          currency:         "USD",
-          destinationToken: attributes[:destination_token],
-          programToken:     attributes[:program_token],
-          purpose:          attributes[:purpose]
-        }
-      end
-
-      def handle_response(key: nil)
-        return connector.errors unless success?
-        @body = if key
-          connector.body[key]
-        else
-          connector.body
+        def create(payload:)
+          response = connector.post(resource: ENDPOINT, 
+                                    payload: prepare_payload(payload_attributes: payload).to_json)
+          instantiate_from_data(response)
         end
       end
 
-      def success?
-        connector.response.success?
-      end
     end
   end
 end

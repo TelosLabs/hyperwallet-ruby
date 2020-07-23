@@ -88,6 +88,7 @@ module Hyperwallet
         end
 
         def instantiate_from_data(data = {})
+          return unless success?
           attributes = {}
           data.each_pair do |key, value|
             attributes.merge!({snakecase(key).to_sym => value})
