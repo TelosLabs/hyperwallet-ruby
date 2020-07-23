@@ -6,26 +6,39 @@ module Hyperwallet
 
       ENDPOINT = 'users'
 
-      attr_accessor :attributes
+      attr_accessor :token,
+                    :status,
+                    :verification_status,
+                    :created_on,
+                    :client_user_id,
+                    :profile_type,
+                    :first_name,
+                    :last_name,
+                    :date_of_birth,
+                    :email,
+                    :address_line1,
+                    :city,
+                    :state_province,
+                    :country,
+                    :postal_code,
+                    :program_token
 
-      def initialize(**args)
-        @attributes = args
-        validate_fields
-      end
-
-      def create
-        connector.post(resource: ENDPOINT, payload: prepare_create_payload.to_json)
+      def show(token: nil)
+        token ||= @token
+        connector.get(resource: ENDPOINT + "/" + token)
         handle_response
+        process_fields(connector.body)
       end
 
-      def show(token:)
-      end
-
-      def update(token:)
+      def update(token:, attributes_to_update: )
+        connector.put(resource: ENDPOINT + "/" + token, payload: prepare_payload(payload_attributes: attributes_to_update).to_json)
+        handle_response
+        process_fields(connector.body)
       end
 
       def index_bank_accounts
         connector.get(resource: bank_account.resource_endpoint(token: attributes[:token]))
+        handle_response
       end
 
       def create_bank_account
@@ -34,47 +47,13 @@ module Hyperwallet
         handle_response
       end
 
-      def get_authentication_token
-        connector.post(resource: ENDPOINT+"/"+ attributes[:token] +"/authentication-token")
-        handle_response("value")
-      end
-
-      def success?
-        connector.response.success?
+      def get_authentication_token(user_token: nil)
+        user_token ||= token
+        connector.post(resource: ENDPOINT+"/"+ user_token +"/authentication-token")
+        handle_response(key: "value")
       end
 
       private 
-
-      def handle_response(key: nil)
-        return connector.errors unless success?
-        if key
-          connector.body[key]
-        else
-          connector.body
-        end
-      end
-
-      def prepare_create_payload
-        {
-          clientUserId:     attributes[:client_user_id],
-          profileType:      attributes[:profile_type],
-          firstName:        attributes[:first_name],
-          lastName:         attributes[:last_name],
-          dateOfBirth:      attributes[:date_of_birth],
-          email:            attributes[:email],
-          addressLine1:     attributes[:address_line_1],
-          city:             attributes[:city],
-          stateProvince:    attributes[:state_province],
-          country:          attributes[:country],
-          postalCode:       attributes[:postal_code],
-          programToken:     attributes[:program_token]
-        }
-      end
-
-      def validate_fields
-        # validate_date -> must be a valid date in YYYY-MM-DD format
-        # vaidate_program_token -> You must provide a valid program token (for a program which you have rights to
-      end
 
       def bank_account
         Hyperwallet::Resources::BankAccount
@@ -83,6 +62,11 @@ module Hyperwallet
       class << self
         def index
           connector.get(resource: ENDPOINT)
+        end
+
+        def create(create_attributes:)
+          response = connector.post(resource: ENDPOINT, payload: prepare_payload(payload_attributes: create_attributes).to_json)
+          instantiate_from_data(response)
         end
       end
     end
