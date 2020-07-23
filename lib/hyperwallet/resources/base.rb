@@ -4,6 +4,10 @@ module Hyperwallet
 
       attr_accessor :connector, :body, :errors, :target
 
+      def initialize(**args)
+        process_fields(args)
+      end
+
       def connector
         @connector ||= Hyperwallet::Api::Client.new
       end
@@ -31,6 +35,10 @@ module Hyperwallet
         attributes&.each_pair do |key, value|
           set_and_validate(key, value)
         end
+      end
+
+      def validation_name_for(key)
+        "validate_#{key}".to_sym
       end
 
       def camelCase(key)
@@ -77,6 +85,14 @@ module Hyperwallet
             payload.merge!({camelCase(key).to_sym => value})
           end
           payload
+        end
+
+        def instantiate_from_data(data = {})
+          attributes = {}
+          data.each_pair do |key, value|
+            attributes.merge!({snakecase(key).to_sym => value})
+          end
+          self.send(:new, attributes)
         end
 
         def camelCase(key)

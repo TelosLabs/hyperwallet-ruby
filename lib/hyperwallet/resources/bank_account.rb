@@ -4,6 +4,11 @@ module Hyperwallet
 
       ENDPOINT        = 'users'
 
+      attr_accessor :bank_account_id,
+                    :bank_account_purpose,
+                    :bank_name,
+                    :branch_id
+
       class << self
         def method_endpoint
           'bank-accounts'

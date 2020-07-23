@@ -23,10 +23,6 @@ module Hyperwallet
                     :postal_code,
                     :program_token
 
-      def initialize(**args)
-        process_fields(args)
-      end
-
       def show(token: nil)
         token ||= @token
         connector.get(resource: ENDPOINT + "/" + token)
@@ -63,10 +59,6 @@ module Hyperwallet
         Hyperwallet::Resources::BankAccount
       end
 
-      def validation_name_for(key)
-        "validate_#{key}".to_sym
-      end
-
       class << self
         def index
           connector.get(resource: ENDPOINT)
@@ -74,15 +66,7 @@ module Hyperwallet
 
         def create(create_attributes:)
           response = connector.post(resource: ENDPOINT, payload: prepare_payload(payload_attributes: create_attributes).to_json)
-          instantiate_from_data(Hyperwallet::Resources::Payee, JSON.parse(response))
-        end
-
-        def instantiate_from_data(klass, data = {})
-          attributes = {}
-          data.each_pair do |key, value|
-            attributes.merge!({snakecase(key).to_sym => value})
-          end
-          klass.send(:new, attributes)
+          instantiate_from_data(response)
         end
       end
     end
