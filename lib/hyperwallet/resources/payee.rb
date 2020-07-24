@@ -60,11 +60,6 @@ module Hyperwallet
       end
 
       class << self
-        def create(create_attributes:)
-          response = connector.post(resource: method_endpoint, payload: prepare_payload(payload_attributes: create_attributes).to_json)
-          instantiate_from_data(response)
-        end
-
         def method_endpoint
           ENDPOINT
         end
