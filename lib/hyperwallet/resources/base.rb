@@ -8,6 +8,11 @@ module Hyperwallet
         process_fields(args)
       end
 
+      def show(token:)
+        connector.get(resource: method_endpoint + "/" + token)
+        handle_response
+      end
+
       def connector
         @connector ||= Hyperwallet::Api::Client.new
       end
@@ -60,7 +65,11 @@ module Hyperwallet
 
       def handle_response(key: nil)
         @errors = connector.errors unless success?
-        @target = connector.body[key.to_s] if key
+        @target = if key
+          connector.body[key.to_s]
+        else
+          connector.body
+        end
       end
 
       def success?
@@ -69,6 +78,16 @@ module Hyperwallet
 
       class << self
         cattr_accessor :connector
+
+        def index
+          connector.get(resource: method_endpoint)
+        end
+
+        def create(data)
+          response = connector.post(resource: method_endpoint, 
+                                    payload: prepare_payload(payload_attributes: data).to_json)
+          instantiate_from_data(response)
+        end
 
         def connector
           @connector ||= Hyperwallet::Api::Client.new

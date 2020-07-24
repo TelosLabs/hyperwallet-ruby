@@ -60,13 +60,13 @@ module Hyperwallet
       end
 
       class << self
-        def index
-          connector.get(resource: ENDPOINT)
+        def create(create_attributes:)
+          response = connector.post(resource: method_endpoint, payload: prepare_payload(payload_attributes: create_attributes).to_json)
+          instantiate_from_data(response)
         end
 
-        def create(create_attributes:)
-          response = connector.post(resource: ENDPOINT, payload: prepare_payload(payload_attributes: create_attributes).to_json)
-          instantiate_from_data(response)
+        def method_endpoint
+          ENDPOINT
         end
       end
     end
