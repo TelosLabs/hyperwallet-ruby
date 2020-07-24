@@ -2,7 +2,7 @@ module Hyperwallet
   module Resources
     class TransferMethod < Hyperwallet::Resources::Base
 
-      ENDPOINT = 'users'
+      ENDPOINT = 'transfer-methods'
 
       attr_accessor :address_line1,
                     :city,
@@ -23,15 +23,19 @@ module Hyperwallet
                     :user_token,
                     :verification_status
 
+      def method_endpoint
+        ENDPOINT
+      end
+
       class << self
         def index(user_token:)
           connector.get(resource: resource_endpoint(token: user_token))
           handle_response
         end
 
-        def create(user_token:, payload:)
+        def create(user_token, data)
           response = connector.post(resource: resource_endpoint(token: user_token), 
-                                    payload:  prepare_payload(payload_attributes: payload).to_json)
+                                    payload:  prepare_payload(payload_attributes: data).to_json)
           instantiate_from_data(response)
         end
 
@@ -40,7 +44,7 @@ module Hyperwallet
         end
 
         def method_endpoint
-          'transfer-methods'
+          ENDPOINT
         end
       end
     end

@@ -2,11 +2,11 @@ module Hyperwallet
   module Resources
     class VenmoAccount < Hyperwallet::Resources::TransferMethod
 
-      ENDPOINT        = 'users'
+      ENDPOINT        = 'bank-accounts'
 
       class << self
         def method_endpoint
-          'bank-accounts'
+          ENDPOINT
         end
       end
 

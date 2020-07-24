@@ -15,21 +15,14 @@ module Hyperwallet
                      :status,
                      :token
 
-      def show(token:)
-        connector.get(resource: ENDPOINT + "/" + token)
-        handle_response
+      def method_endpoint
+        ENDPOINT
       end
 
       class << self
-        def index
-          connector.get(resource: ENDPOINT)
-          #TODO: instantiate payments, add_pagination, etc.
-        end
 
-        def create(payload:)
-          response = connector.post(resource: ENDPOINT, 
-                                    payload: prepare_payload(payload_attributes: payload).to_json)
-          instantiate_from_data(response)
+        def method_endpoint
+          ENDPOINT
         end
       end
 
