@@ -8,6 +8,11 @@ module Hyperwallet
         process_fields(args)
       end
 
+      def show(token:)
+        connector.get(resource: method_endpoint + "/" + token)
+        handle_response
+      end
+
       def connector
         @connector ||= Hyperwallet::Api::Client.new
       end
@@ -60,7 +65,11 @@ module Hyperwallet
 
       def handle_response(key: nil)
         @errors = connector.errors unless success?
-        @target = connector.body[key.to_s] if key
+        @target = if key
+          connector.body[key.to_s]
+        else
+          connector.body
+        end
       end
 
       def success?
