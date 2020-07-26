@@ -3,7 +3,7 @@ require 'pry'
 
 class Hyperwallet::Api::Client < Hyperwallet::Api::Config
 
-  attr_accessor :client_id, :conn, :response, :body, :errors
+  attr_accessor :client_id, :conn, :response, :body, :errors, :previous_payload
 
   def initialize
     # @client_id = client_id
@@ -19,6 +19,7 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
   end
 
   def post(resource:, payload: nil)
+    @previous_payload = payload
     self.response = conn.post do |request|
       request.url resource
       request.body = payload
