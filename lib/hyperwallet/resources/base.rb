@@ -67,8 +67,27 @@ module Hyperwallet
         connector.response.success?
       end
 
+      def failed?
+        !success?
+      end
+
       class << self
         cattr_accessor :connector
+
+        def index
+          connector.get(resource: method_endpoint)
+        end
+
+        def create(data)
+          response = connector.post(resource: method_endpoint, 
+                                    payload: prepare_payload(payload_attributes: data).to_json)
+          if success?
+            instantiate_from_data(response) 
+          else
+            data = JSON.parse(connector.previous_payload).merge(connector.errors)
+            instantiate_from_data(data)
+          end
+        end
 
         def connector
           @connector ||= Hyperwallet::Api::Client.new
@@ -76,6 +95,10 @@ module Hyperwallet
 
         def success?
           connector.response.success?
+        end
+
+        def failed?
+          !success?
         end
 
         def prepare_payload(payload_attributes:)
@@ -88,7 +111,6 @@ module Hyperwallet
         end
 
         def instantiate_from_data(data = {})
-          return unless success?
           attributes = {}
           data.each_pair do |key, value|
             attributes.merge!({snakecase(key).to_sym => value})
