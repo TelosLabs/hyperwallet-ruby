@@ -30,7 +30,6 @@ module Hyperwallet
       class << self
         def index(user_token:)
           connector.get(resource: resource_endpoint(token: user_token))
-          handle_response
         end
 
         def create(user_token, data)
