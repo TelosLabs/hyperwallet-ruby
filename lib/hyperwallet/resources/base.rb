@@ -70,6 +70,7 @@ module Hyperwallet
         else
           connector.body
         end
+        process_fields(data_for_hydration)
       end
 
       def success?
@@ -78,6 +79,15 @@ module Hyperwallet
 
       def failed?
         !success?
+      end
+
+      def data_for_hydration
+        if success?
+          connector.body
+        else
+          attributes = connector&.previous_payload || {}
+          attributes.merge(connector.errors)
+        end
       end
 
       class << self
@@ -90,12 +100,13 @@ module Hyperwallet
         def create(data)
           response = connector.post(resource: method_endpoint, 
                                     payload: prepare_payload(payload_attributes: data).to_json)
-          if success?
-            instantiate_from_data(response) 
+          
+          data = if success?
+            response
           else
-            data = JSON.parse(connector.previous_payload).merge(connector.errors)
-            instantiate_from_data(data)
+            JSON.parse(connector.previous_payload).merge(connector.errors)
           end
+          instantiate_from_data(data)
         end
 
         def connector

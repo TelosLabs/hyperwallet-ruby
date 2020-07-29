@@ -27,23 +27,15 @@ module Hyperwallet
         token ||= @token
         connector.get(resource: ENDPOINT + "/" + token)
         handle_response
-        process_fields(connector.body)
       end
 
       def update(token:, attributes_to_update: )
         connector.put(resource: ENDPOINT + "/" + token, payload: prepare_payload(payload_attributes: attributes_to_update).to_json)
         handle_response
-        process_fields(connector.body)
       end
 
       def index_bank_accounts
-        connector.get(resource: bank_account.resource_endpoint(token: attributes[:token]))
-        handle_response
-      end
-
-      def create_bank_account
-        connector.post(resource: bank_account.resource_endpoint(token: attributes[:token]), 
-                       payload:  bank_account.prepare_bank_account_create_payload(attributes).to_json)
+        connector.get(resource: bank_account.resource_endpoint(token: token))
         handle_response
       end
 
