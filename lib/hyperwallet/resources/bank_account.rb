@@ -9,6 +9,10 @@ module Hyperwallet
                     :bank_name,
                     :branch_id
 
+      def method_endpoint
+        'bank-accounts'
+      end
+
       class << self
         def method_endpoint
           'bank-accounts'
