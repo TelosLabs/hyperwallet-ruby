@@ -3,6 +3,7 @@ PATH
   specs:
     hyperwallet-ruby (0.1.0)
       activesupport (~> 6.0.3.2)
+      faraday (~> 0.17.3)
 
 GEM
   remote: https://rubygems.org/
@@ -50,7 +51,6 @@ PLATFORMS
 
 DEPENDENCIES
   bundler (~> 2.0)
-  faraday (~> 0.17.3)
   hyperwallet-ruby!
   pry
   rake (~> 13.0)

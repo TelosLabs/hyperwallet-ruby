@@ -1,5 +1,4 @@
 require 'faraday'
-require 'pry'
 
 class Hyperwallet::Api::Client < Hyperwallet::Api::Config
 
