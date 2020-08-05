@@ -30,7 +30,7 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
 
   def handle_response
     if self.response.success? 
-      @body = JSON.parse(self.response.body)
+      @body = JSON.parse(self.response.body) unless self.response.body.empty?
     else
       @errors = JSON.parse(self.response.body)
     end
