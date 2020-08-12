@@ -2,7 +2,7 @@ module Hyperwallet
   module Api
     class Config
 
-      PRODUCTION_URL     = "https://api.sandbox.hyperwallet.com/rest"
+      PRODUCTION_URL     = "https://api.paylution.com/rest"
       UAT_URL            = "https://uat-api.paylution.com/rest"
 
       API_VERSION = "/v3"

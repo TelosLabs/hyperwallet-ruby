@@ -55,7 +55,7 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
     if self.class.uat?
       UAT_URL
     elsif self.class.production?
-      BASE_URL
+      PRODUCTION_URL
     end
   end
 
