@@ -135,7 +135,7 @@ module Hyperwallet
           data.each_pair do |key, value|
             attributes.merge!({snakecase(key).to_sym => value})
           end
-          self.send(:new, attributes)
+          self.send(:new, **attributes)
         end
 
         def camelCase(key)
