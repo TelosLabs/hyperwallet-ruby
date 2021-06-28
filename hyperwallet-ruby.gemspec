@@ -27,7 +27,6 @@ Gem::Specification.new do |s|
   s.executables   = s.files.grep(%r{^exe/}) { |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_dependency 'activesupport',       "~> 6.1.3.1"
   s.add_dependency "faraday",             "~> 1.4.3"
   s.add_development_dependency "bundler", "~> 2.0"
   s.add_development_dependency "rake",    "~> 13.0"
