@@ -1,7 +1,6 @@
 module Hyperwallet
   module Api
     class Config
-      cattr_accessor :api_user, :api_password, :api_mode, :proxy
 
       PRODUCTION_URL     = "https://api.paylution.com/rest"
       UAT_URL            = "https://uat-api.paylution.com/rest"
@@ -10,6 +9,7 @@ module Hyperwallet
       MODES       = [:uat, :production]
 
       class << self
+        attr_accessor :api_user, :api_password, :api_mode, :proxy
         def uat?
           api_mode == :uat
         end
