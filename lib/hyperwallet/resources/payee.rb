@@ -1,4 +1,4 @@
-require 'active_support/json'
+require 'json'
 
 module Hyperwallet
   module Resources
@@ -30,7 +30,7 @@ module Hyperwallet
       end
 
       def update(token:, attributes_to_update: )
-        connector.put(resource: ENDPOINT + "/" + token, payload: prepare_payload(payload_attributes: attributes_to_update).to_json)
+        connector.put(resource: ENDPOINT + "/" + token, payload: JSON.generate(prepare_payload(payload_attributes: attributes_to_update)))
         handle_response
       end
 

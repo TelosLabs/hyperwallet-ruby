@@ -1,4 +1,3 @@
-require 'active_support/core_ext/class/attribute_accessors'
 require "hyperwallet/version"
 require "hyperwallet/api"
 require "hyperwallet/resources"
