@@ -91,7 +91,7 @@ module Hyperwallet
       end
 
       class << self
-        cattr_accessor :connector
+        attr_accessor :connector
 
         def index
           connector.get(resource: method_endpoint)
@@ -99,7 +99,7 @@ module Hyperwallet
 
         def create(data)
           response = connector.post(resource: method_endpoint, 
-                                    payload: prepare_payload(payload_attributes: data).to_json)
+                                    payload: JSON.generate(prepare_payload(payload_attributes: data)))
           
           data = if success?
             response
