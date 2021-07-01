@@ -9,8 +9,7 @@ module Hyperwallet
       MODES       = [:uat, :production]
 
       class << self
-        cattr_accessor :api_user, :api_password, :api_mode, :proxy
-
+        attr_accessor :api_user, :api_password, :api_mode, :proxy
         def uat?
           api_mode == :uat
         end

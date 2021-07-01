@@ -1,4 +1,4 @@
-require 'active_support/json'
+require 'json'
 
 module Hyperwallet
   module Resources

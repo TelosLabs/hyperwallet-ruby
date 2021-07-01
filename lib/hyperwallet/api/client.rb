@@ -37,9 +37,9 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
   end
 
   def get_connector
-    Faraday.new(url: base_url, proxy: self.class.proxy) do |conn|
+    Faraday.new(url: base_url, proxy: self.class.superclass.proxy) do |conn|
       conn.adapter :net_http
-      conn.basic_auth(self.class.api_user, self.class.api_password) 
+      conn.basic_auth(self.class.superclass.api_user, self.class.superclass.api_password) 
     end
   end
 
@@ -52,9 +52,9 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
   end
 
   def active_url
-    if self.class.uat?
+    if self.class.superclass.uat?
       UAT_URL
-    elsif self.class.production?
+    elsif self.class.superclass.production?
       PRODUCTION_URL
     end
   end
