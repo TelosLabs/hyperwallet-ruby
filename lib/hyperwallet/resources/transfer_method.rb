@@ -45,7 +45,7 @@ module Hyperwallet
 
         def create(user_token, data)
           response = connector.post(resource: resource_endpoint(token: user_token), 
-                                    payload:  prepare_payload(payload_attributes: data).to_json)
+                                    payload:  JSON.generate(prepare_payload(payload_attributes: data)))
           instantiate_from_data(response)
         end
 
