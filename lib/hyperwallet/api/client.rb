@@ -26,6 +26,15 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
     handle_response
   end
 
+  def put(resource:, payload: nil)
+    @previous_payload = payload
+    self.response = conn.put do |request|
+      request.url resource
+      request.body = payload
+    end
+    handle_response
+  end
+
   private
 
   def handle_response
