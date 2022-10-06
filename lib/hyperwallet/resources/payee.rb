@@ -29,7 +29,8 @@ module Hyperwallet
         handle_response
       end
 
-      def update(token:, attributes_to_update: )
+      def update(token: nil, attributes_to_update:)
+        token ||= @token
         connector.put(resource: ENDPOINT + "/" + token, payload: JSON.generate(prepare_payload(payload_attributes: attributes_to_update)))
         handle_response
       end
