@@ -78,7 +78,7 @@ Everyone interacting in the Hyperwallet::Ruby project’s codebases, issue track
 #### Update
 ```ruby
   user_token = "usr-6ac6618e-44fe-4252-af8c-76cd4e68f601"
-  existing_payee = Hyperwallet::Resources::Payee.new(token: user_token)
+  payee = Hyperwallet::Resources::Payee.new(token: user_token)
 
   payload = {
     :client_user_id => 'test5userid5',
@@ -95,19 +95,19 @@ Everyone interacting in the Hyperwallet::Ruby project’s codebases, issue track
     :program_token  => 'prg-1bd466b5-2a58-4e3a-8942-6a93591a9a86' 
   }
 
-  existing_payee.update(attributes: payload)
+  payee.update(attributes: payload)
 ```
 #### Getting a new auth token
 ```ruby
   user_token = "usr-6ac6618e-44fe-4252-af8c-76cd4e68f601"
-  existing_payee = Hyperwallet::Resources::Payee.new(token: user_token)
-  token = existing_payee.get_authentication_token
+  payee = Hyperwallet::Resources::Payee.new(token: user_token)
+  token = payee.get_authentication_token
 ```
 #### Getting the list of bank accounts for a user
 ```ruby
   user_token     = "usr-6ac6618e-44fe-4252-af8c-76cd4e68f601"
-  existing_payee = Hyperwallet::Resources::Payee.new(token: user_token)
-  bank_accounts  = existing_payee.index_bank_accounts
+  payee = Hyperwallet::Resources::Payee.new(token: user_token)
+  bank_accounts  = payee.index_bank_accounts
 ```
 ### Transfer Methods
 #### Getting transfer methods
