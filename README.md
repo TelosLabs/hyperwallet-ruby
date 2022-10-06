@@ -49,29 +49,53 @@ Everyone interacting in the Hyperwallet::Ruby project’s codebases, issue track
   payees          = payee_connector.index
 ```
 
-#### create
+#### Create
 ```ruby
-  payload2 = {:client_user_id            => 'test5userid5',
-             :profile_type              => 'INDIVIDUAL' ,
-             :first_name                => 'Han',
-             :last_name                 => 'Solo' ,
-             :date_of_birth             => '1980-11-12',
-             :email                     => 'jgtr7@hey.com',
-             :address_line1            => '675 Dolores St',
-             :city                      => 'Berkeley' ,
-             :state_province            => 'CA' ,
-             :country                   => 'US',
-             :postal_code               => '94704',
-             :program_token             => 'prg-1bd466b5-2a58-4e3a-8942-6a93591a9a86' }
+  payload = {
+    :client_user_id => 'test5userid5',
+    :profile_type   => 'INDIVIDUAL' ,
+    :first_name     => 'Han',
+    :last_name      => 'Solo',
+    :date_of_birth  => '1980-11-12',
+    :email          => 'jgtr7@hey.com',
+    :address_line1  => '675 Dolores St',
+    :city           => 'Berkeley',
+    :state_province => 'CA',
+    :country        => 'US',
+    :postal_code    => '94704',
+    :program_token  => 'prg-1bd466b5-2a58-4e3a-8942-6a93591a9a86' 
+  }
 
-  new_payee2            = Hyperwallet::Resources::Payee.create(payload2)
+  new_payee2 = Hyperwallet::Resources::Payee.create(payload)
 
 ```
-#### show
+#### Show
 ```ruby
   user_token = "usr-6ac6618e-44fe-4252-af8c-76cd4e68f601"
   payee = Hyperwallet::Resources::Payee.new
   payee.show(token: user_token)
+```
+#### Update
+```ruby
+  user_token = "usr-6ac6618e-44fe-4252-af8c-76cd4e68f601"
+  existing_payee = Hyperwallet::Resources::Payee.new(token: user_token)
+
+  payload = {
+    :client_user_id => 'test5userid5',
+    :profile_type   => 'INDIVIDUAL' ,
+    :first_name     => 'Han',
+    :last_name      => 'Solo',
+    :date_of_birth  => '1980-11-12',
+    :email          => 'jgtr7@hey.com',
+    :address_line1  => '675 Dolores St',
+    :city           => 'Berkeley',
+    :state_province => 'CA',
+    :country        => 'US',
+    :postal_code    => '94704',
+    :program_token  => 'prg-1bd466b5-2a58-4e3a-8942-6a93591a9a86' 
+  }
+
+  existing_payee.update(attributes: payload)
 ```
 #### Getting a new auth token
 ```ruby
