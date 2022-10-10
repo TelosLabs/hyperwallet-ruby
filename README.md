@@ -72,8 +72,8 @@ Everyone interacting in the Hyperwallet::Ruby project’s codebases, issue track
 #### Show
 ```ruby
   user_token = "usr-6ac6618e-44fe-4252-af8c-76cd4e68f601"
-  payee = Hyperwallet::Resources::Payee.new
-  payee.show(token: user_token)
+  payee = Hyperwallet::Resources::Payee.new(token: user_token)
+  payee.show
 ```
 #### Update
 ```ruby
