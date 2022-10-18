@@ -9,7 +9,6 @@ module Hyperwallet
       attr_accessor :client_id, :conn, :response, :body, :errors, :previous_payload
 
       def initialize
-        # @client_id = client_id
         @conn = connector
         add_headers
       end
