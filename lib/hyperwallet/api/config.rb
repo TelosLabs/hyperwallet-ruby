@@ -5,7 +5,7 @@ module Hyperwallet
       PRODUCTION_URL     = "https://api.paylution.com/rest"
       UAT_URL            = "https://uat-api.paylution.com/rest"
 
-      API_VERSION = "/v4"
+      API_VERSION = "/v4/users"
       MODES       = [:uat, :production]
 
       class << self
