@@ -47,8 +47,8 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
     base_url + "/" + resource
   end
 
-  def base_url 
-    active_url + API_VERSION
+  def base_url
+    active_url + self.class.superclass.api_version
   end
 
   def active_url
