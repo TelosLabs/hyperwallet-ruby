@@ -26,6 +26,14 @@ class Hyperwallet::Api::Client < Hyperwallet::Api::Config
     handle_response
   end
 
+  def test_api_version
+    self.class.superclass.api_version
+  end
+
+  def current_api_version
+    API_VERSION
+  end
+
   private
 
   def handle_response
