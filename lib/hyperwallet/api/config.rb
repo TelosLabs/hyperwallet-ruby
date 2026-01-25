@@ -4,6 +4,8 @@ module Hyperwallet
 
       PRODUCTION_URL     = "https://api.paylution.com/rest"
       UAT_URL            = "https://uat-api.paylution.com/rest"
+      PRODUCTION_API_VERSION = "/v3"
+      UAT_API_VERSION = "/v4"
       MODES              = [:uat, :production]
 
       class << self
@@ -17,9 +19,9 @@ module Hyperwallet
         end
 
         def api_version
-          return "/v3" if production?
+          return PRODUCTION_API_VERSION if production?
 
-          "/v4"
+          UAT_API_VERSION
         end
       end
     end
