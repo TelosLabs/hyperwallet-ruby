@@ -19,9 +19,7 @@ module Hyperwallet
         end
 
         def api_version
-          return PRODUCTION_API_VERSION if production?
-
-          UAT_API_VERSION
+          PRODUCTION_API_VERSION
         end
       end
     end
